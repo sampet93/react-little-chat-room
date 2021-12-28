@@ -7,13 +7,13 @@ import {
 } from "./styles/ChatRoom.styled";
 import Message from "./Message";
 
-export default function ChatRoom() {
+export default function ChatRoom(props) {
   const maxMessageChars = 240;
 
   // Control the message state
   const [message, setMessage] = useState("");
   // Messages from the server
-  const [messages, setMessages] = useState([<Message />]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {}, []);
 
@@ -30,7 +30,13 @@ export default function ChatRoom() {
 
     // Placeholder clientsided messaging
     let currentMessages = messages;
-    currentMessages.unshift(<Message text={message} date={getCurrentDate()} />);
+    currentMessages.unshift(
+      <Message
+        nickname={props.nickname}
+        text={message}
+        date={getCurrentDate()}
+      />
+    );
 
     setMessages(currentMessages);
 

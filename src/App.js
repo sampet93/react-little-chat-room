@@ -9,13 +9,25 @@ import theme from "./components/styles/Theme";
 
 function App() {
   const [showChatRoom, setShowChatRoom] = useState(false);
+  const [nickname, setNickname] = useState("");
+
+  const joinChatRoom = (nickname) => {
+    setNickname(nickname);
+    setShowChatRoom(true);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
         <Header />
-        <Container>{showChatRoom ? <ChatRoom /> : <LoadingCircle />}</Container>
+        <Container>
+          {showChatRoom ? (
+            <ChatRoom nickname={nickname} />
+          ) : (
+            <LoadingCircle handleJoinChat={joinChatRoom} />
+          )}
+        </Container>
       </>
     </ThemeProvider>
   );

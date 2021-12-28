@@ -11,7 +11,7 @@ export default function Message(props) {
     <StyledMessage>
       <MessageTopRow>
         <MessageNicknameDiv>
-          <p>PERUNA </p>
+          <p>{props.nickname}</p>
         </MessageNicknameDiv>
         <MessageTimeDiv>
           <p> {props.date}</p>
