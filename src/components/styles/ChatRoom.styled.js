@@ -1,5 +1,10 @@
 import styled, { keyframes } from "styled-components";
 
+export const expandChatRoomAnimation = keyframes`
+ 0% { height: 50px }
+ 100% { width: 400px;}
+`;
+
 export const StyledChatRoom = styled.div`
   display: flex;
   justify-content: center;
@@ -12,6 +17,9 @@ export const StyledChatRoom = styled.div`
   width: 400px;
   height: 400px;
   gap: 0.5rem;
+  animation-fill-mode: forwards;
+  animation-name: ${expandChatRoomAnimation};
+  animation-duration: 0.5s;
 `;
 
 export const ChatArea = styled.div`

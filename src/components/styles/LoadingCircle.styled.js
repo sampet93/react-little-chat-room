@@ -8,7 +8,7 @@ export const breatheAnimation = keyframes`
 
 export const expandAnimation = keyframes`
  0% { width: ${({ size }) => size}}
- 100% { width: 300px; border-radius: 15px}
+ 100% { width: 300px;}
 `;
 
 export const OuterCircle = styled.div`
@@ -17,7 +17,7 @@ export const OuterCircle = styled.div`
   align-items: center;
   padding: ${({ padding }) => padding};
   border: solid 0.25rem ${({ theme }) => theme.colors.border};
-  border-radius: 50%;
+  border-radius: 15px;
   width: ${({ size }) => size};
   height: ${({ size }) => size};
   animation-play-state: ${({ loading }) => (loading ? "paused" : "running")};
