@@ -3,6 +3,7 @@ const theme = {
     // Fonts
     fontLight: "#FFF",
     fontDark: "black",
+    placeholder: "#89ccb4",
 
     // Backgrounds
     chatArea: "#319778",

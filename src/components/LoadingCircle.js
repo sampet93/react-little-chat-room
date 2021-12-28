@@ -12,7 +12,7 @@ export default function LoadingCircle() {
   useEffect(() => {
     setInterval(() => {
       setLoading(false);
-    }, 1500);
+    }, 1000);
   }, []);
 
   return (

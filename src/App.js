@@ -8,14 +8,14 @@ import ChatRoom from "./components/ChatRoom";
 import theme from "./components/styles/Theme";
 
 function App() {
-  const [showChatRoom, setShowChatRoom] = useState(true);
+  const [showChatRoom, setShowChatRoom] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
         <Header />
-        <Container>{showChatRoom ? <ChatRoom /> : <ChatRoom />}</Container>
+        <Container>{showChatRoom ? <ChatRoom /> : <LoadingCircle />}</Container>
       </>
     </ThemeProvider>
   );
