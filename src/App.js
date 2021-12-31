@@ -11,7 +11,7 @@ function App() {
   const [showChatRoom, setShowChatRoom] = useState(false);
   const [nickname, setNickname] = useState("");
 
-  const joinChatRoom = (nickname) => {
+  const joinChatRoom = async (nickname) => {
     setNickname(nickname);
     setShowChatRoom(true);
   };

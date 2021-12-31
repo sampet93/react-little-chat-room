@@ -6,6 +6,8 @@ import {
   ChatInputText,
 } from "./styles/ChatRoom.styled";
 import Message from "./Message";
+import { db } from "../firebase.config";
+import { ref, child, get } from "firebase/database";
 
 export default function ChatRoom(props) {
   const maxMessageChars = 240;
@@ -14,8 +16,43 @@ export default function ChatRoom(props) {
   const [message, setMessage] = useState("");
   // Messages from the server
   const [messages, setMessages] = useState([]);
+  // Get messages
+  const getMessages = async () => {
+    try {
+      const dbRef = ref(db);
+      const snapshot = await get(child(dbRef, `messages/`));
 
-  useEffect(() => {}, []);
+      if (snapshot.exists()) {
+        const messageObjects = [];
+        snapshot.val().forEach((snapshotMessage) => {
+          const newMessage = (
+            <Message
+              nickname={snapshotMessage.nickname}
+              text={snapshotMessage.message}
+              date={getCurrentDate()}
+            />
+          );
+          messageObjects.unshift(newMessage);
+        });
+
+        setMessages(messageObjects);
+      } else {
+        console.log("No data available");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Get the current date string "DD.MM.YYYY"
+  const getCurrentDate = () => {
+    const date = new Date();
+    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, []);
 
   const handleEnter = (event) => {
     if (event.key === "Enter") {
@@ -41,12 +78,6 @@ export default function ChatRoom(props) {
     setMessages(currentMessages);
 
     setMessage("");
-  };
-
-  // Get the current date string "DD.MM.YYYY"
-  const getCurrentDate = () => {
-    const date = new Date();
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
   };
 
   return (
