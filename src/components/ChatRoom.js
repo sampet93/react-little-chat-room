@@ -29,7 +29,8 @@ export default function ChatRoom(props) {
             <Message
               nickname={snapshotMessage.nickname}
               text={snapshotMessage.message}
-              date={getCurrentDate()}
+              date={snapshotMessage.time}
+              admin={snapshot.admin}
             />
           );
           messageObjects.unshift(newMessage);

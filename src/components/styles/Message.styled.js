@@ -24,6 +24,7 @@ export const MessageTopRow = styled.div`
   max-height: 2rem;
   width: 100%;
 `;
+
 export const MessageBottomRow = styled.div`
   flex: 1 1 100%;
   word-wrap: normal;
