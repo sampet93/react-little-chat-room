@@ -11,7 +11,6 @@ import { ref, child, get, set } from "firebase/database";
 
 export default function ChatRoom(props) {
   const maxMessageChars = 240;
-
   // Control the message state
   const [message, setMessage] = useState("");
   // Messages from the server
@@ -25,9 +24,10 @@ export default function ChatRoom(props) {
 
       if (snapshot.exists()) {
         const messageObjects = [];
-        snapshot.val().forEach((snapshotMessage) => {
+        snapshot.val().forEach((snapshotMessage, index) => {
           const newMessage = (
             <Message
+              key={index}
               nickname={snapshotMessage.nickname}
               text={snapshotMessage.message}
               date={snapshotMessage.time}
@@ -81,7 +81,7 @@ export default function ChatRoom(props) {
   // Get the current date string "DD.MM.YYYY"
   const getCurrentDate = () => {
     const date = new Date();
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   };
 
   useEffect(() => {
