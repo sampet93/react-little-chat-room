@@ -7,7 +7,7 @@ import {
 } from "./styles/ChatRoom.styled";
 import Message from "./Message";
 import { db } from "../firebase.config";
-import { ref, child, get } from "firebase/database";
+import { ref, child, get, set } from "firebase/database";
 
 export default function ChatRoom(props) {
   const maxMessageChars = 240;
@@ -16,6 +16,7 @@ export default function ChatRoom(props) {
   const [message, setMessage] = useState("");
   // Messages from the server
   const [messages, setMessages] = useState([]);
+
   // Get messages
   const getMessages = async () => {
     try {
@@ -45,6 +46,38 @@ export default function ChatRoom(props) {
     }
   };
 
+  const sendMessage = async (message, time) => {
+    const latestId = await getLatestMessageId();
+
+    set(ref(db, "messages/" + latestId), {
+      admin: false,
+      id: latestId,
+      message: message,
+      nickname: props.nickname,
+      time: time,
+    });
+
+    // Get updated messages from server
+    await getMessages();
+
+    setMessage("");
+  };
+
+  const getLatestMessageId = async () => {
+    let newMessageId = 0;
+    try {
+      const dbRef = ref(db);
+      const snapshot = await get(child(dbRef, `messages/`));
+
+      if (snapshot.exists()) {
+        newMessageId = snapshot.val()[snapshot.val().length - 1].id + 1;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return newMessageId;
+  };
+
   // Get the current date string "DD.MM.YYYY"
   const getCurrentDate = () => {
     const date = new Date();
@@ -58,27 +91,9 @@ export default function ChatRoom(props) {
   const handleEnter = (event) => {
     if (event.key === "Enter") {
       if (event.target.value.length > 0) {
-        sendMessage(message);
+        sendMessage(message, getCurrentDate());
       }
     }
-  };
-
-  const sendMessage = (message) => {
-    // TODO: SendMessage, server
-
-    // Placeholder clientsided messaging
-    let currentMessages = messages;
-    currentMessages.unshift(
-      <Message
-        nickname={props.nickname}
-        text={message}
-        date={getCurrentDate()}
-      />
-    );
-
-    setMessages(currentMessages);
-
-    setMessage("");
   };
 
   return (
