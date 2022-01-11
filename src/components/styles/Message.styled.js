@@ -49,6 +49,6 @@ export const MessageTimeDiv = styled.div`
 export const MessageText = styled.div`
   display: block;
   min-height: 0;
-  font-size: 1.25em;
+  font-size: 1.1em;
   color: ${({ theme }) => theme.colors.fontDark};
 `;
